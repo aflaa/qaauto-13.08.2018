@@ -7,10 +7,10 @@
             <methods>
                 <include name="succeedfulLoginTest"/>
                 <include name="negativeLoginShortValuesTest"/>
-                <include name="negativeLoginLongValuesTest"/>
-                <include name="negativeEmptyLoginTest"/>
-                <include name="negativeLoginWrongValuesTest"/>
-                <include name="negativeLogoutBackLoginTest"/>
+                <exclude name="negativeLoginLongValuesTest"/>
+                <exclude name="negativeEmptyLoginTest"/>
+                <exclude name="negativeLoginWrongValuesTest"/>
+                <exclude name="negativeLogoutBackLoginTest"/>
             </methods>
             </class>
         </classes>
