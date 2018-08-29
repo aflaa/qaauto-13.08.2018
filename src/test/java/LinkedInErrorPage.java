@@ -64,8 +64,9 @@ public class LinkedInErrorPage {
         }
     }
 
-    public String getText (WebElement element) {
-        return element.getText();
+    public String getText (WebElement elmnt) {
+        return elmnt.getText();
+
     }
 
     public void clearEmail() {
@@ -80,13 +81,9 @@ public class LinkedInErrorPage {
     }
 
     public boolean isLongErrorMessagesMatch () {
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
         return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && getText(loginHintMessage).equals("The text you provided is too long (the maximum length is 128 characters, your text contains 259 characters).")
+                && getText(loginHintMessage).equals("The text you provided is too long (the maximum length is 128 characters, your text contains 129 characters).")
               ;
     }
 
@@ -97,8 +94,11 @@ public class LinkedInErrorPage {
     }
 
     public boolean isWrongPwErrorMessageMatch() {
-        return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && getText(passwordHintMessage).equals("Hmm, that's not the right password. Please try again or request a new one.")
-                ;
+
+        return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+               // && getText(passwordHintMessage).equals("Hmm, that's not the right password. Please try again or request a new one.")
+
+                && passwordHintMessage.getText().equals("Hmm, that's not the right password. Please try again or request a new one.");
+
     }
 }
