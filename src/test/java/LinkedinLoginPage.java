@@ -51,4 +51,13 @@ public class LinkedinLoginPage {
                 && signInButton.isDisplayed();
     }
 
+    public boolean isSignInDisabled() {
+        return isPageLoaded()
+                && (!signInButton.isEnabled()) ;
+    }
+
+    public void clearEmail() {
+        userEmailField.clear();
+    }
+
 }

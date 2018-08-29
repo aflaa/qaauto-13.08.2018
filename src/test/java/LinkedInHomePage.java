@@ -3,9 +3,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LinkedInHomePage {
-    private String signOutButton_xpath="//a[@data-control-name='nav.settings_signout']";
+
     private WebDriver driver;
     private WebElement profileNavItem;
+    private WebElement signOutButton;
 
     public LinkedInHomePage(WebDriver driver){
         this.driver = driver;
@@ -14,6 +15,8 @@ public class LinkedInHomePage {
 
     public void initElements() {
         profileNavItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
+        profileNavItem.click();
+        signOutButton = driver.findElement(By.xpath("//a[@data-control-name='nav.settings_signout']"));
     }
 
     public boolean isDisplayed (WebElement element) {
@@ -36,6 +39,6 @@ public class LinkedInHomePage {
 
     public void clickSignOut () {
         profileNavItem.click();
-        driver.findElement(By.xpath(signOutButton_xpath)).click();
+        signOutButton.click();
     }
 }

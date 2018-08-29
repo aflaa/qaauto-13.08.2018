@@ -29,10 +29,10 @@ public class LinkedinLoginTest {
         driver.get(testSite);
     }
 
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
+//    @AfterMethod
+//    public void afterMethod() {
+//        driver.quit();
+//    }
 
     @Test
     public void succeedfulLoginTest () {
@@ -59,8 +59,8 @@ public class LinkedinLoginTest {
         //fill in with short email and password
         //verify Login and Password hint messages are correct
 
-        String email="a@b.c";
-        String PW="wrong";
+        email="a@b.c";
+        PW="wrong";
 
         LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
@@ -70,25 +70,6 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
 
         Assert.assertTrue(linkedInErrorPage.isShortErrorMessagesMatch(), "Error messages don't match");
-
-//        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/uas/login-submit","Login page URL is wrong.");
-//        Assert.assertEquals(driver.getTitle(), "Sign In to LinkedIn","Login page title is wrong.");
-
-//        WebElement alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
-//        Assert.assertEquals(alertMessage.getText(),
-//               "There were one or more errors in your submission. Please correct the marked fields below.",
-//                "Alert message test is wrong.");
-//
-//        WebElement loginHintMessage =driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
-//        Assert.assertEquals(loginHintMessage.getText(),
-//                "Please enter a valid email address.",
-//                "Login hint message does not match.");
-//
-//        WebElement passwordHintMessage =driver.findElement(By.xpath("//span[@id='session_password-login-error']"));
-//        Assert.assertEquals(passwordHintMessage.getText(),
-//                "The password you provided must have at least 6 characters.",
-//                "Password hint message does not match.");
-
     }
 
     @Test
@@ -97,70 +78,63 @@ public class LinkedinLoginTest {
         //fill in email field with long email =129 characters
         //verify Login and password hint messages are correct
 
-        String emailLong="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129@gmail.com";
+        email="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129@gmail.com";
 
-        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
+        linkedinLoginPage.login(email,PW);
 
-        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
-        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
-        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+        LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
+      //  Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
 
-        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page.");
-        userEmailField.sendKeys(emailLong);
-        userPasswordField.sendKeys(PW);
-        signInButton.click();
-
-        //  Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/uas/login-submit","Login page URL is wrong.");
-        //  Assert.assertEquals(driver.getTitle(), "Sign In to LinkedIn","Login page title is wrong.");
-
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        WebElement alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
-        Assert.assertEquals(alertMessage.getText(),
-                "There were one or more errors in your submission. Please correct the marked fields below.",
-                "Alert message test is wrong.");
-
-        WebElement loginHintMessage =driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
-        Assert.assertEquals(loginHintMessage.getText(),
-                "The text you provided is too long (the maximum length is 128 characters, your text contains 129 characters).",
-                "Login hint message does not match.");
-
+        Assert.assertTrue(linkedInErrorPage.isLongErrorMessagesMatch(), "Error message for a long login doesn't match");
     }
+
     @Test
     public void negativeEmptyLoginTest (){
         //navigate to login site
         //leave empty email and password/or one of them
         //verify that signIn button disabled and logon impossible
 
-        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+//        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
+//        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+//
+//        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
+//        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
+//        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+//
+//        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page");
 
-        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
-        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
-        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+//        userEmailField.sendKeys("");
+//        userPasswordField.sendKeys("");
+//        signInButton.click();
 
-        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page");
-        userEmailField.sendKeys("");
-        userPasswordField.sendKeys("");
-        signInButton.click();
-        Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when Login and PW empty.");
+        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
+        linkedinLoginPage.login("","");
 
-        userEmailField.sendKeys(email);
-        userPasswordField.sendKeys("");
-        signInButton.click();
-        Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when PW empty.");
+       //in disabled Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
 
-        userEmailField.clear();
-        userEmailField.sendKeys("");
-        userPasswordField.sendKeys(PW);
-        signInButton.click();
-        Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when Login empty.");
+        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login and PW empty");
 
+ //       Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when Login and PW empty.");
+
+        //LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
+        linkedinLoginPage.login(email,"");
+
+        //Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when PW empty.");
+        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when PW empty");
+
+ //       userEmailField.clear();
+        linkedinLoginPage.clearEmail();
+        linkedinLoginPage.login("",PW);
+        //Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when PW empty.");
+        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login empty");
+
+//        userEmailField.sendKeys("");
+//        userPasswordField.sendKeys(PW);
+//        signInButton.click();
+//        Assert.assertFalse(signInButton.isEnabled(),"signIn button is not disabled, when Login empty.");
     }
 
     @Test
@@ -169,54 +143,69 @@ public class LinkedinLoginTest {
         //fill in email and password wrong/incorrect values
         //verify for Login and Password hint messages are correct for incorrect values
 
-        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
+        linkedinLoginPage.login("a"+email,PW);
 
-        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
-        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
-        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+        LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
+        Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
+        Assert.assertTrue(linkedInErrorPage.isWrongLoginErrorMessageMatch(), "Login hint message does not match.");
 
-        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page.");
-        userEmailField.sendKeys("a"+ email);
-        userPasswordField.sendKeys(PW);
-        signInButton.click();
+        linkedInErrorPage.clearEmail();
+        linkedInErrorPage.login(email,PW+PW);
+        Assert.assertTrue(linkedInErrorPage.isWrongPwErrorMessageMatch(), "Password hint message does not match.");
+
+        //       Assert.assertTrue(linkedInErrorPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login empty");
+
+
+//        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
+//        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+//
+//        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
+//        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
+//        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+
+//        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page.");
+//        userEmailField.sendKeys("a"+ email);
+//        userPasswordField.sendKeys(PW);
+//        signInButton.click();
 
         //  Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/uas/login-submit","Login page URL is wrong.");
         //  Assert.assertEquals(driver.getTitle(), "Sign In to LinkedIn","Login page title is wrong.");
 
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        WebElement alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
-        Assert.assertEquals(alertMessage.getText(),
-                "There were one or more errors in your submission. Please correct the marked fields below.",
-                "Alert message test is wrong.");
-
-        WebElement loginHintMessage =driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
-        Assert.assertEquals(loginHintMessage.getText(),
-                "Hmm, we don't recognize that email. Please try again.",
-                "Login hint message does not match.");
-
-        WebElement loginErrorField = driver.findElement(By.xpath("//input[@id='session_key-login']"));
-        WebElement pwErrorField = driver.findElement(By.xpath("//input[@id='session_password-login']"));
-
-        loginErrorField.clear();
-        loginErrorField.sendKeys(email);
-        pwErrorField.sendKeys(PW+PW);
-        driver.findElement(By.xpath("//input[@name='signin']")).click();
-
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement passwordHintMessage =driver.findElement(By.xpath("//span[@id='session_password-login-error']"));
-        Assert.assertEquals(passwordHintMessage.getText(),
-                "Hmm, that's not the right password. Please try again or request a new one.",
-                "Password hint message does not match.");
+//        try {
+//            sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        WebElement alertMessage = driver.findElement(By.xpath("//div[@role='alert']"));
+//        Assert.assertEquals(alertMessage.getText(),
+//                "There were one or more errors in your submission. Please correct the marked fields below.",
+//                "Alert message test is wrong.");
+//
+//        WebElement loginHintMessage =driver.findElement(By.xpath("//span[@id='session_key-login-error']"));
+//        Assert.assertEquals(loginHintMessage.getText(),
+//                "Hmm, we don't recognize that email. Please try again.",
+//                "Login hint message does not match.");
+//
+//        WebElement loginErrorField = driver.findElement(By.xpath("//input[@id='session_key-login']"));
+//        WebElement pwErrorField = driver.findElement(By.xpath("//input[@id='session_password-login']"));
+//
+//        loginErrorField.clear();
+//        loginErrorField.sendKeys(email);
+//        pwErrorField.sendKeys(PW+PW);
+//        driver.findElement(By.xpath("//input[@name='signin']")).click();
+//
+//        try {
+//            sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        WebElement passwordHintMessage =driver.findElement(By.xpath("//span[@id='session_password-login-error']"));
+//        Assert.assertEquals(passwordHintMessage.getText(),
+//                "Hmm, that's not the right password. Please try again or request a new one.",
+//                "Password hint message does not match.");
 
     }
 
@@ -231,42 +220,16 @@ public class LinkedinLoginTest {
         //click Back
         //verify that user is not logged in
 
-        Assert.assertEquals(driver.getCurrentUrl(), testSite,"Login page URL is wrong.");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
+        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
 
-        WebElement userEmailField=driver.findElement(By.xpath(loginField_xpath));
-        WebElement userPasswordField=driver.findElement(By.xpath(pwField_xpath));
-        WebElement signInButton=driver.findElement(By.xpath(signInButton_xpath));
+        linkedinLoginPage.login(email,PW);
 
-        Assert.assertTrue(signInButton.isDisplayed(), "signIn button is not displayed on Login page.");
-        //Assert.assertEquals(signInButton.getAttribute("value"), "Sign in","Sign in button is unavailable");
-        // Assert.assertNotNull(driver.findElement(By.xpath("//input[@class='login submit-button']").getText()));
+        LinkedInHomePage linkedInHomePage =  new LinkedInHomePage(driver);
+        Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
+        linkedInHomePage.clickSignOut();
 
-        //userEmailField.clear(); -not needed, as everytime browser opened by default empty
-        userEmailField.sendKeys(email);
-        //userPasswordField.clear();
-        userPasswordField.sendKeys(PW);
-        signInButton.click();
-
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.linkedin.com/feed/","Login page URL is wrong.");
-        Assert.assertEquals(driver.getTitle(), "LinkedIn","Login page title is wrong.");
-
-//        WebElement profilePhoto=driver.findElement(By.xpath(profilePhoto_xpath));
-//        Assert.assertEquals(profilePhoto.getAttribute("alt"), userName,"User name is incorrect");
-//        profilePhoto.click();
-
-        WebElement profileNavItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
-        Assert.assertTrue(profileNavItem.isDisplayed(),
-                "profileNavItem is not displayed on Home page.");
-
-        profileNavItem.click();
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        driver.findElement(By.xpath(signOutButton_xpath)).click();
+       // driver.findElement(By.xpath(signOutButton_xpath)).click();
 
         try {
             sleep(3000);
