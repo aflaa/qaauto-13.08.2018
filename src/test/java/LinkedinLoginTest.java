@@ -1,7 +1,6 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -25,14 +24,17 @@ public class LinkedinLoginTest {
 
     @BeforeMethod //BeforeTest doesn't work as expected
     public void beforeMethod() {
-        driver = new ChromeDriver();
-        driver.get(testSite);
+      ChromeOptions chromeOptions = new ChromeOptions();
+      chromeOptions.setExperimentalOption("useAutomationExtension",false);
+      chromeOptions.addArguments("start-maximized");
+      driver =new ChromeDriver(chromeOptions);
+      driver.get(testSite);
     }
 
-//    @AfterMethod
-//    public void afterMethod() {
-//        driver.quit();
-//    }
+    @AfterMethod
+    public void afterMethod() {
+        driver.quit();
+    }
 
     @Test
     public void succeedfulLoginTest () {
