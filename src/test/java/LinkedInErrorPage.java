@@ -8,6 +8,7 @@ public class LinkedInErrorPage {
     String signInButton_xpath="//input[@name='signin']"; //"//input[@class='login submit-button']";
     String loginField_xpath="//input[@id='session_key-login']";
     String pwField_xpath="//input[@id='session_password-login']";
+    String useCookiesAlertClose="//button[@id='dismiss-alert']";
 
     WebElement alertMessage;
     WebElement loginHintMessage;
@@ -75,30 +76,49 @@ public class LinkedInErrorPage {
 
 
     public boolean isShortErrorMessagesMatch () {
+        if (alertMessage.getText().contains("uses cookies")) {
+            driver.findElement(By.xpath(useCookiesAlertClose)).click();
+        }
         return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
                 && getText(loginHintMessage).equals("Please enter a valid email address.")
                 && getText(passwordHintMessage).equals("The password you provided must have at least 6 characters.");
     }
 
     public boolean isLongErrorMessagesMatch () {
-
+        if (alertMessage.getText().contains("uses cookies")) {
+            driver.findElement(By.xpath(useCookiesAlertClose)).click();
+        }
         return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
                 && getText(loginHintMessage).equals("The text you provided is too long (the maximum length is 128 characters, your text contains 129 characters).")
               ;
     }
 
     public boolean isWrongLoginErrorMessageMatch() {
-        return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && getText(loginHintMessage).equals("Hmm, we don't recognize that email. Please try again.")
+        if (alertMessage.getText().contains("uses cookies")) {
+            driver.findElement(By.xpath(useCookiesAlertClose)).click();
+        }
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+       // System.out.println( alertMessage.getText());
+       // System.out.println(loginHintMessage.getText());
+        return
+//                alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+//                &&
+                loginHintMessage.getText().equals("Hmm, we don't recognize that email. Please try again.")
                 ;
     }
 
     public boolean isWrongPwErrorMessageMatch() {
-
-        return alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
-               // && getText(passwordHintMessage).equals("Hmm, that's not the right password. Please try again or request a new one.")
-
-                && passwordHintMessage.getText().equals("Hmm, that's not the right password. Please try again or request a new one.");
+        if (alertMessage.getText().contains("uses cookies")) {
+            driver.findElement(By.xpath(useCookiesAlertClose)).click();
+        }
+        return
+                //alertMessage.getText().equals("There were one or more errors in your submission. Please correct the marked fields below.")
+        //       getText(passwordHintMessage).equals("Hmm, that's not the right password. Please try again or request a new one.")
+        passwordHintMessage.getText().equals("Hmm, that's not the right password. Please try again or request a new one.");
 
     }
 }

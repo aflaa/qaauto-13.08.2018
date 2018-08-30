@@ -6,7 +6,7 @@
             <class name="LinkedinLoginTest">
             <methods>
                 <include name="succeedfulLoginTest"/>
-                <include name="negativeLoginShortValuesTest"/>
+                <exclude name="negativeLoginShortValuesTest"/>
                 <exclude name="negativeLoginLongValuesTest"/>
                 <exclude name="negativeEmptyLoginTest"/>
                 <exclude name="negativeLoginWrongValuesTest"/>

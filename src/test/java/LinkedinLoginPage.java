@@ -1,32 +1,34 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
 public class LinkedinLoginPage {
 
-    String signInButton_xpath="//input[@class='login submit-button']";
-    String loginField_xpath="//input[@class='login-email']";
-    String pwField_xpath="//input[@class='login-password']";
+//    String signInButton_xpath="//input[@class='login submit-button']";
+//    String loginField_xpath="//input[@class='login-email']";
+//    String pwField_xpath="//input[@class='login-password']";
+
 
     private WebDriver driver;
+
+    @FindBy(xpath = "//input[@class='login-email']")
     private WebElement userEmailField;
+
+    @FindBy(xpath = "//input[@class='login-password']")
     private WebElement userPasswordField;
+
+    @FindBy(xpath = "//input[@class='login submit-button']")
     private WebElement signInButton;
 
     public LinkedinLoginPage(WebDriver driver){
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver, this);
     }
 
-    public void initElements() {
-        userEmailField =driver.findElement(By.xpath(loginField_xpath));
-        userPasswordField = driver.findElement(By.xpath(pwField_xpath));
-        signInButton = driver.findElement(By.xpath(signInButton_xpath));
-    }
-
-    public void login(String userEmail, String userPW) {
+    public <T> T login(String userEmail, String userPW) {//problem will occur, as can be different pages
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPW);
         signInButton.click();
@@ -34,6 +36,15 @@ public class LinkedinLoginPage {
             sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        if (getCurrentUrl().contains("/feed")) {
+            return (T) new LinkedInHomePage(driver);
+        }
+        if (getCurrentUrl().contains("/login-submit")) {
+            return (T) new LinkedInErrorPage(driver);
+        }
+        else {
+            return (T) this;
         }
     }
 

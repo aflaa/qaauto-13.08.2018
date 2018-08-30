@@ -15,13 +15,11 @@ public class LinkedInHomePage {
 
     public void initElements() {
         profileNavItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
-        profileNavItem.click();
-        signOutButton = driver.findElement(By.xpath("//a[@data-control-name='nav.settings_signout']"));
     }
 
-    public boolean isDisplayed (WebElement element) {
-       return element.isDisplayed();
-    }
+//    public boolean isDisplayed (WebElement element) {
+//       return element.isDisplayed();
+//    }
 
     public String getCurrentUrl(){
         return driver.getCurrentUrl();
@@ -33,12 +31,13 @@ public class LinkedInHomePage {
 
     public boolean isPageLoaded() {
         return getCurrentUrl().equals("https://www.linkedin.com/feed/")
-                && getCurrentTitle().equals("LinkedIn")
+                && getCurrentTitle().contains("LinkedIn") //can be removed
                 && profileNavItem.isDisplayed() ;
     }
 
     public void clickSignOut () {
         profileNavItem.click();
+        signOutButton = driver.findElement(By.xpath("//a[@data-control-name='nav.settings_signout']"));
         signOutButton.click();
     }
 }
