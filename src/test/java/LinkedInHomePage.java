@@ -1,43 +1,43 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class LinkedInHomePage {
 
     private WebDriver driver;
+
+    String url = "https://www.linkedin.com/feed/";
+    String title = "LinkedIn" ;
+
+    @FindBy(xpath = "//li[@id='profile-nav-item']")
     private WebElement profileNavItem;
+    @FindBy(xpath = "//a[@data-control-name='nav.settings_signout']")
     private WebElement signOutButton;
 
     public LinkedInHomePage(WebDriver driver){
         this.driver = driver;
-        initElements();
+        PageFactory.initElements(driver,this);
     }
-
-    public void initElements() {
-        profileNavItem = driver.findElement(By.xpath("//li[@id='profile-nav-item']"));
-    }
-
-//    public boolean isDisplayed (WebElement element) {
-//       return element.isDisplayed();
-//    }
 
     public String getCurrentUrl(){
         return driver.getCurrentUrl();
     }
 
-    public String getCurrentTitle(){
+    public String getCurrentTitle()
+    {
         return driver.getTitle();
     }
 
     public boolean isPageLoaded() {
-        return getCurrentUrl().equals("https://www.linkedin.com/feed/")
-                && getCurrentTitle().contains("LinkedIn") //can be removed
+        return getCurrentUrl().equals(url)
+                && getCurrentTitle().contains(title) //can be removed
                 && profileNavItem.isDisplayed() ;
     }
 
     public void clickSignOut () {
         profileNavItem.click();
-        signOutButton = driver.findElement(By.xpath("//a[@data-control-name='nav.settings_signout']"));
         signOutButton.click();
     }
 }

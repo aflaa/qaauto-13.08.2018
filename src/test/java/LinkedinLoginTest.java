@@ -62,45 +62,29 @@ public class LinkedinLoginTest {
        linkedInHomePage.clickSignOut();
     }
 
-    @Test
-    public void negativeLoginShortValuesTest (){
+    @DataProvider
+    public Object[][] invalidDataProvider() {
+        return new Object[][]{
+                { "a@b.c", "wrong","Please enter a valid email address.", "The password you provided must have at least 6 characters." },
+                { "ba"+email, PW ,"Hmm, we don't recognize that email. Please try again.", "" },
+                { email, PW+PW ,"", "Hmm, that's not the right password. Please try again or request a new one." },
+                { "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129@gmail.com", PW ,"The text you provided is too long (the maximum length is 128 characters, your text contains 129 characters).", "" }
+        };
+    }
+    @Test(dataProvider = "invalidDataProvider")
+    public void negativeLoginErrorsTest (String userEmail, String userPassword, String loginMessage, String pwMessage){
         //navigate to login site
         //fill in with short email and password
         //verify Login and Password hint messages are correct
 
-        email="a@b.c";
-        PW="wrong";
-
         LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-        linkedinLoginPage.login(email,PW);
+        linkedinLoginPage.login(userEmail,userPassword);
 
         LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
         Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
 
-        Assert.assertTrue(linkedInErrorPage.isShortErrorMessagesMatch(), "Error messages don't match");
-    }
-
-    @Test
-    public void negativeLoginLongValuesTest (){
-        //navigate to login site
-        //fill in email field with long email =129 characters
-        //verify Login and password hint messages are correct
-
-        email="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129@gmail.com";
-
-        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-        linkedinLoginPage.login(email,PW);
-
-        LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
-      //  Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Assert.assertTrue(linkedInErrorPage.isLongErrorMessagesMatch(), "Error message for a long login doesn't match");
+        Assert.assertTrue(linkedInErrorPage.isMessageMatch(loginMessage, pwMessage), "Error messages don't match");
     }
 
     @Test
@@ -125,27 +109,15 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login empty");
     }
 
-    @Test
-    public void negativeLoginWrongValuesTest (){
-        //navigate to login site
-        //fill in email and password wrong/incorrect values
-        //verify for Login and Password hint messages are correct for incorrect values
-
-        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-        linkedinLoginPage.login("ba"+email,PW);
-
-        LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
-   //     Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
-        Assert.assertTrue(linkedInErrorPage.isWrongLoginErrorMessageMatch(), "Login hint message does not match.");
-        linkedInErrorPage.clearEmail();
-
-        linkedInErrorPage.login(email,PW+PW);
-        Assert.assertTrue(linkedInErrorPage.isWrongPwErrorMessageMatch(), "Password hint message does not match.");
+    @DataProvider
+    public Object[][] invalidBackDataProvider() {
+        return new Object[][]{
+                { "ALtestQA@gmail.com", "21122112" }
+        };
     }
 
-    @Test
-    public void negativeLogoutBackLoginTest () {
+    @Test(dataProvider = "invalidBackDataProvider")
+    public void negativeLogoutBackLoginTest (String userEmail, String userPassword) {
         //navigate to linkedin.com
         //verify that login page is loaded
         //enter userEmail
@@ -155,14 +127,11 @@ public class LinkedinLoginTest {
         //click Back
         //verify that user is not logged in
 
-        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-
-        linkedinLoginPage.login(email,PW);
-
-        LinkedInHomePage linkedInHomePage =  new LinkedInHomePage(driver);
-        Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
-        linkedInHomePage.clickSignOut();
+       LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+       Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
+       LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPassword);
+       Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
+       linkedInHomePage.clickSignOut();
 
        // driver.findElement(By.xpath(signOutButton_xpath)).click();
 
@@ -178,10 +147,7 @@ public class LinkedinLoginTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Assert.assertEquals(driver.getTitle(), "LinkedIn: Log In or Sign Up","Login page title is wrong.");
-      //  driver.navigate().refresh();
-       // Assert.assertNull(profileNavItem, "Profile menu is missing");
-        //Assert.assertTrue(signInButton.isEnabled(), "Sign in button again displayed");
+        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
     }
 
 }
