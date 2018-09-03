@@ -22,6 +22,7 @@ public class LinkedinLoginTest {
 //    String signOutButton_xpath="//a[@data-control-name='nav.settings_signout']";
 
     WebDriver driver;
+    LinkedinLoginPage linkedinLoginPage;
 
     @BeforeMethod //BeforeTest doesn't work as expected
     public void beforeMethod() {
@@ -30,7 +31,7 @@ public class LinkedinLoginTest {
       chromeOptions.addArguments("start-maximized");
       driver =new ChromeDriver(chromeOptions);
       driver.get(testSite);
-     //need to update LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
+      linkedinLoginPage =  new LinkedinLoginPage(driver);
     }
 
     @AfterMethod
@@ -55,9 +56,9 @@ public class LinkedinLoginTest {
         //click on 'Sign in' button
         //verify Home page is displayed.
 
-       LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
        LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPassword);
+
        Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
        linkedInHomePage.clickSignOut();
     }
@@ -72,19 +73,21 @@ public class LinkedinLoginTest {
         };
     }
     @Test(dataProvider = "invalidDataProvider")
-    public void negativeLoginErrorsTest (String userEmail, String userPassword, String loginMessage, String pwMessage){
+    public void negativeLoginErrorsTest (String userEmail, String userPassword, String userEmailAlertMessage, String userPasswordAlertMessage){
         //navigate to login site
         //fill in with short email and password
         //verify Login and Password hint messages are correct
 
         LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-        linkedinLoginPage.login(userEmail,userPassword);
 
-        LinkedInErrorPage linkedInErrorPage =  new LinkedInErrorPage(driver);
-        Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"Login page after error is not loaded");
+        LinkedInErrorPage linkedInErrorPage = linkedinLoginPage.login(userEmail,userPassword);
+        Assert.assertTrue(linkedInErrorPage.isPageLoaded(),"ErrorPage is not loaded");
 
-        Assert.assertTrue(linkedInErrorPage.isMessageMatch(loginMessage, pwMessage), "Error messages don't match");
+        Assert.assertEquals(linkedInErrorPage.getAlertMessageText(), "There were one or more errors in your submission. Please correct the marked fields below.", "Alert message text is wrong.");
+        Assert.assertEquals(linkedInErrorPage.getUserEmailAlertText(), userEmailAlertMessage, "User Email alert message text is wrong.");
+        Assert.assertEquals(linkedInErrorPage.getPWAlertText(), userPasswordAlertMessage, "User Password alert message text is wrong.");
+
     }
 
     @Test
@@ -95,10 +98,8 @@ public class LinkedinLoginTest {
 
         LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-       // linkedinLoginPage.login("","");
 
         linkedinLoginPage  =  linkedinLoginPage.login("","");
-        //new LinkedInHomePage(driver);
 
         Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login and PW empty");
         linkedinLoginPage.login(email,"");

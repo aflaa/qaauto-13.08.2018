@@ -1,16 +1,10 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import java.util.Collection;
-
 import static java.lang.Thread.sleep;
 
-public class LinkedinLoginPage {
-
-    private WebDriver driver;
+public class LinkedinLoginPage extends LinkedinBasePage {
 
     String url ="https://www.linkedin.com/";
     String title = "LinkedIn: Log In or Sign Up" ;
@@ -52,14 +46,6 @@ public class LinkedinLoginPage {
         else {
             return (T) this;
         }
-    }
-
-    private String getCurrentUrl() {
-            return driver.getCurrentUrl();
-        }
-
-    public String getCurrentTitle(){
-        return driver.getTitle();
     }
 
     public boolean isPageLoaded() {

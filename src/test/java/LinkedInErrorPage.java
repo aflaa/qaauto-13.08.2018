@@ -1,14 +1,9 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static java.lang.Thread.sleep;
-
-public class LinkedInErrorPage {
-
-    private WebDriver driver;
+public class LinkedInErrorPage extends LinkedinBasePage {
 
     String url = "https://www.linkedin.com/uas/login-submit";
     String title = "Sign In to LinkedIn";
@@ -24,23 +19,14 @@ public class LinkedInErrorPage {
     @FindBy(xpath = "//div[@role='alert']")
     private WebElement alertMessage;
     @FindBy(xpath = "//span[@id='session_key-login-error']")
-    private WebElement loginHintMessage ;
-    @FindBy(xpath = "//span[@id='session_password-login-error']")
-    private WebElement passwordHintMessage;
+    private WebElement userEmailAlertMessage;
+    @FindBy(xpath = "//*[@id='session_password-login-error']") //* -as span is usually changed to other tag
+    private WebElement userPasswordAlertMessage;
 
 
     public LinkedInErrorPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
-    }
-
-    public String getCurrentUrl(){
-
-        return driver.getCurrentUrl();
-    }
-
-    public String getCurrentTitle(){
-        return driver.getTitle();
     }
 
     public boolean isPageLoaded() {
@@ -49,19 +35,15 @@ public class LinkedInErrorPage {
                 && signInButton.isDisplayed() ;
     }
 
-    public String getText (WebElement elmnt) {
-        return elmnt.getText();
-
+    public String getAlertMessageText() {
+        return alertMessage.getText();
     }
 
-    public boolean isMessageMatch(String loginMessage, String pwMessage) {
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return getText(alertMessage).equals("There were one or more errors in your submission. Please correct the marked fields below.")
-                && getText(loginHintMessage).equals(loginMessage)
-                && getText(passwordHintMessage).equals(pwMessage);
+    public String getUserEmailAlertText() {
+        return userEmailAlertMessage.getText();
+    }
+
+    public String getPWAlertText() {
+        return userPasswordAlertMessage.getText();
     }
 }
