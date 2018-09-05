@@ -6,10 +6,16 @@
             <class name="LinkedinLoginTest">
             <methods>
                 <exclude name="succeedfulLoginTest"/>
-                <include name="negativeLoginErrorsTest"/>
+                <exclude name="negativeLoginErrorsTest"/>
                 <exclude name="negativeEmptyLoginTest"/>
                 <exclude name="negativeLogoutBackLoginTest"/>
             </methods>
+            </class>
+
+            <class name="LinkedinSearchTest">
+                <methods>
+                    <include name="searchHomePageTest"/>
+                </methods>
             </class>
         </classes>
     </test>
