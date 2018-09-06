@@ -14,7 +14,13 @@
 
             <class name="LinkedinSearchTest">
                 <methods>
-                    <include name="searchHomePageTest"/>
+                    <exclude name="searchHomePageTest"/>
+                </methods>
+            </class>
+
+            <class name="LinkedinResetPasswordTest">
+                <methods>
+                    <include name="resetPasswordTest"/>
                 </methods>
             </class>
         </classes>
