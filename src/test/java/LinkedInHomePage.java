@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import static java.lang.Thread.sleep;
+
 public class LinkedInHomePage extends LinkedinBasePage{
 
     String url = "https://www.linkedin.com/feed/";
@@ -14,7 +16,7 @@ public class LinkedInHomePage extends LinkedinBasePage{
     @FindBy(xpath = "//a[@data-control-name='nav.settings_signout']")
     private WebElement signOutButton;
 
-    @FindBy(xpath = "//*[@class='search-typeahead-v2 ember-view']//input[@placeholder='Search']")
+    @FindBy(xpath = "//input[@placeholder and @role='combobox']")
     private WebElement searchField;
 
     @FindBy(xpath = "//button[@aria-controls='launchpad-cards']")
@@ -37,9 +39,15 @@ public class LinkedInHomePage extends LinkedinBasePage{
     }
 
     public LinkedinSearchPage search(String searchTerm) {
-        launchpadCards.click();
+        //launchpadCards.click(); //close a big block before search results to see more results
+
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.ENTER); //is needed?
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return new LinkedinSearchPage(driver);
     }
 
