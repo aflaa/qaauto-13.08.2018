@@ -17,6 +17,9 @@ public class LinkedInHomePage extends LinkedinBasePage{
     @FindBy(xpath = "//*[@class='search-typeahead-v2 ember-view']//input[@placeholder='Search']")
     private WebElement searchField;
 
+    @FindBy(xpath = "//button[@aria-controls='launchpad-cards']")
+    private WebElement launchpadCards;
+
     public LinkedInHomePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
@@ -34,6 +37,7 @@ public class LinkedInHomePage extends LinkedinBasePage{
     }
 
     public LinkedinSearchPage search(String searchTerm) {
+        launchpadCards.click();
         searchField.sendKeys(searchTerm);
         searchField.sendKeys(Keys.ENTER); //is needed?
         return new LinkedinSearchPage(driver);

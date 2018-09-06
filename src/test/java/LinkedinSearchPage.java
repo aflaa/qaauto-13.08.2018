@@ -1,3 +1,4 @@
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,6 +36,16 @@ public class LinkedinSearchPage extends LinkedinBasePage {
     }
 
     public int searchResultsCount() {
+        JavascriptExecutor executor = (JavascriptExecutor)driver;
+        executor.executeScript("document.body.style.zoom = '0.8'");
+
+        JavascriptExecutor js = ((JavascriptExecutor) driver);
+        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return foundResults.size();
     }
 

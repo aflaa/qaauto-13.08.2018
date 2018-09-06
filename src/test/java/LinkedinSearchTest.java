@@ -2,7 +2,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -28,10 +27,10 @@ public class LinkedinSearchTest extends LinkedinBasePage {
 
     }
 
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
+//    @AfterMethod
+//    public void afterMethod() {
+//        driver.quit();
+//    }
 
     @DataProvider
     public Object[][] searchDataProvider() {
@@ -54,9 +53,6 @@ public class LinkedinSearchTest extends LinkedinBasePage {
         //verify 10 results on search page
         //verify each result item contains
 
-//        JavascriptExecutor executor = (JavascriptExecutor)driver;
-//        executor.executeScript("document.body.style.zoom = '1.5'");
-
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
         LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPassword);
 
@@ -65,7 +61,7 @@ public class LinkedinSearchTest extends LinkedinBasePage {
         LinkedinSearchPage linkedinSearchPage=linkedInHomePage.search(searchTerm);
         Assert.assertTrue(linkedinSearchPage.isPageLoaded(),"Search page is not loaded");
 
-        Assert.assertEquals(linkedinSearchPage.searchResultsCount(), 4 //countExpectedResults
+        Assert.assertEquals(linkedinSearchPage.searchResultsCount(), countExpectedResults
                 , "Found results count doesn't equal " +countExpectedResults) ;
 
         Assert.assertTrue(linkedinSearchPage.foundResult(searchTerm), "Search term "+ searchTerm + "is missing in search result") ;
