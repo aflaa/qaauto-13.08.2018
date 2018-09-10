@@ -3,7 +3,7 @@
 <suite name="TestNG" verbose="1" >
     <test name="LinkedIn" >
         <classes>
-            <class name="LinkedinLoginTest">
+            <class name="test.LinkedinLoginTest">
             <methods>
                 <exclude name="succeedfulLoginTest"/>
                 <exclude name="negativeLoginErrorsTest"/>
@@ -12,13 +12,13 @@
             </methods>
             </class>
 
-            <class name="LinkedinSearchTest">
+            <class name="test.LinkedinSearchTest">
                 <methods>
                     <exclude name="searchHomePageTest"/>
                 </methods>
             </class>
 
-            <class name="LinkedinResetPasswordTest">
+            <class name="test.LinkedinResetPasswordTest">
                 <methods>
                     <include name="resetPasswordTest"/>
                 </methods>

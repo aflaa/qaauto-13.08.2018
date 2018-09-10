@@ -1,43 +1,18 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.LinkedInErrorPage;
+import page.LinkedInHomePage;
+import page.LinkedinLoginPage;
 
 import static java.lang.Thread.sleep;
 
-public class LinkedinLoginTest {
+public class LinkedinLoginTest extends LinkedinBaseTest{
 
-    String testSite="https://www.linkedin.com/";
     String email="altestqa@gmail.com";
     String PW="21122112";
-//    String userName="al lena";
-//    String signInButton_xpath="//input[@class='login submit-button']";
-//    String loginField_xpath="//input[@class='login-email']";
-//    String pwField_xpath="//input[@class='login-password']";
-//    String profilePhoto_xpath="//img[@class='nav-item__profile-member-photo nav-item__icon ghost-person']";
-//    String signOutButton_xpath="//a[@data-control-name='nav.settings_signout']";
-
-    WebDriver driver;
-    LinkedinLoginPage linkedinLoginPage;
-
-    @BeforeMethod //BeforeTest doesn't work as expected
-    public void beforeMethod() {
-      ChromeOptions chromeOptions = new ChromeOptions();
-      chromeOptions.setExperimentalOption("useAutomationExtension",false);
-      chromeOptions.addArguments("start-maximized");
-      driver =new ChromeDriver(chromeOptions);
-      driver.get(testSite);
-      linkedinLoginPage =  new LinkedinLoginPage(driver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
 
     @DataProvider
     public Object[][] validDataProvider() {

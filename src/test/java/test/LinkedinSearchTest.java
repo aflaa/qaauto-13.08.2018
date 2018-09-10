@@ -1,37 +1,17 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+package test;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.LinkedInHomePage;
+import page.LinkedinSearchPage;
 
 import java.util.List;
 
-public class LinkedinSearchTest extends LinkedinBasePage {
+public class LinkedinSearchTest extends LinkedinBaseTest {
 
-    String testSite="https://www.linkedin.com/";
     String userEmail="altestqa@gmail.com";
     String userPassword="21122112";
-
-    WebDriver driver;
-    LinkedinLoginPage linkedinLoginPage;
-
-    @BeforeMethod //BeforeTest doesn't work as expected
-    public void beforeMethod() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setExperimentalOption("useAutomationExtension",false);
-        chromeOptions.addArguments("start-maximized");
-        driver =new ChromeDriver(chromeOptions);
-        driver.get(testSite);
-        linkedinLoginPage =  new LinkedinLoginPage(driver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.quit();
-    }
 
     @DataProvider
     public Object[][] searchDataProvider() {

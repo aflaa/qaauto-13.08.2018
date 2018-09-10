@@ -1,7 +1,10 @@
+package page;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import util.GMailService;
 
 public class LinkedinForgotPasswordPage extends LinkedinBasePage {
 
@@ -28,8 +31,27 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
     }
 
     public LinkedinSecureLinkPage findAccount() {
+        GMailService gMailService = new GMailService();
+        gMailService.connect();
+
         emailAccountField.sendKeys(userEmail);
         findAccountButton.click();
+        //ToDo:
+    //getting URL from gmail >> move to other page:
+        //  take message
+        //  find href
+        //  encode href with &amp
+        //decode href
+        //insert href
+        // go to insert new password
+
+        String messageSubject = "here's the link to reset your password";
+        String messageTo = "altestqa@gmail.com";
+        String messageFrom = "security-noreply@linkedin.com";
+
+        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
+        System.out.println("Content: " + message);
+
         return new LinkedinSecureLinkPage(driver);
     }
 }
