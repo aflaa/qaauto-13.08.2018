@@ -31,7 +31,7 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
     }
 
     public LinkedinSecureLinkPage findAccount() {
-        GMailService gMailService = new GMailService();
+      //  GMailService gMailService = new GMailService();
         gMailService.connect();
 
         emailAccountField.sendKeys(userEmail);
@@ -49,8 +49,8 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
         String messageTo = "altestqa@gmail.com";
         String messageFrom = "security-noreply@linkedin.com";
 
-        String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
-        System.out.println("Content: " + message);
+        receivedEmail= gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
+        System.out.println("Content: " + receivedEmail );
 
         return new LinkedinSecureLinkPage(driver);
     }

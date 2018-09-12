@@ -1,5 +1,6 @@
 package page;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -36,5 +37,15 @@ public class LinkedinSecureLinkPage extends LinkedinBasePage {
                 && getCurrentTitle().contains(title)
                 //&& diffEmailButton.isDisplayed()
                 ;
+    }
+    public LinkedinSetNewPasswordPage navigateToLinkFromEmail() {
+        String resetPasswordLink =
+                StringUtils.substringBetween(receivedEmail,
+                        "To change your LinkedIn password, click <a href=\"",
+                        "\" style").replace("amp;","");
+
+        System.out.println(resetPasswordLink);
+        driver.get(resetPasswordLink);
+        return new LinkedinSetNewPasswordPage(driver);
     }
 }

@@ -9,7 +9,7 @@ import static java.lang.Thread.sleep;
 public class LinkedinResetPasswordTest extends LinkedinBaseTest{
 
     String email="altestqa@gmail.com";
-    String PW="21122112";
+    String newPassword = "Qqqq2222";
 
     @Test
     public void resetPasswordTest () {
@@ -27,11 +27,9 @@ public class LinkedinResetPasswordTest extends LinkedinBaseTest{
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
         LinkedinForgotPasswordPage linkedinForgotPasswordPage = linkedinLoginPage.forgotPasswordClick();
 
-        Assert.assertTrue(linkedinForgotPasswordPage.isPageLoaded(),"Forgotpassword page is not loaded");
+        Assert.assertTrue(linkedinForgotPasswordPage.isPageLoaded(),"Forgot password page is not loaded");
 
         LinkedinSecureLinkPage linkedinSecureLinkPage =linkedinForgotPasswordPage.findAccount();
-
-        Assert.assertTrue(linkedinSecureLinkPage.isPageLoaded(),"Secure link page is not loaded");
 
         /////////////////////////////////////////////manual link click//////////////////////////
 
@@ -42,10 +40,20 @@ public class LinkedinResetPasswordTest extends LinkedinBaseTest{
         }
 
         //navigate to link from email. from 1st onject link to gmail, from other get it
-        LinkedinNewPasswordPage linkedinNewPasswordPage =new LinkedinNewPasswordPage(driver);
+        Assert.assertTrue(linkedinSecureLinkPage.isPageLoaded(),"Secure link page is not loaded");
 
-        LinkedinPasswordChangedPage linkedinPasswordChangedPage = linkedinNewPasswordPage.newPasswordSend();
-        LinkedInHomePage linkedInHomePage = linkedinPasswordChangedPage.goHome();
+        LinkedinSetNewPasswordPage linkedinSetNewPasswordPage =
+                linkedinSecureLinkPage.navigateToLinkFromEmail();
+
+        Assert.assertTrue(linkedinSetNewPasswordPage.isPageLoaded(),
+                "SetNewPasswordPage is not loaded.");
+
+        LinkedinSuccessfulPasswordResetPage linkedinSuccessfulPasswordResetPage
+                = linkedinSetNewPasswordPage.newPasswordSend(newPassword);
+
+        Assert.assertTrue(linkedinSuccessfulPasswordResetPage.isPageLoaded(),
+                "SuccessfulPasswordResetPage is not loaded.");
+        LinkedInHomePage linkedInHomePage = linkedinSuccessfulPasswordResetPage.goHome();
 
         Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
 
