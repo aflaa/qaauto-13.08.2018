@@ -34,7 +34,7 @@ public class LinkedinResetPasswordTest extends LinkedinBaseTest{
         /////////////////////////////////////////////manual link click//////////////////////////
 
         try {
-            sleep(24000);
+            sleep(12000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

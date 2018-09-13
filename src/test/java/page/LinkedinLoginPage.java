@@ -6,6 +6,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import static java.lang.Thread.sleep;
 
+
+/**
+ * LinkedinLogin Page Object class.
+ */
 public class LinkedinLoginPage extends LinkedinBasePage {
 
     String url ="https://www.linkedin.com/";
@@ -26,11 +30,24 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     private WebElement forgotPasswordButton;
 
 
+    /**
+     * Constructor for LinkedinLoginPage
+     *
+     * @param driver -driver instance from tests.
+     */
     public LinkedinLoginPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * User login by username/password.
+     *
+     * @param userEmail - String with user Email.
+     * @param userPW - String with user password
+     * @param <T> - generic type to to return different PageObjects.
+     * @return one of corresponding PageObjects LinkedInHomePage/LinkedInErrorPage/LinkedinLoginPage.
+     */
     public <T> T login(String userEmail, String userPW) {//problem will occur, as can be different pages
         if (alertMessage.getText().contains("uses cookies")) {
             cookiesAlertClose.click();

@@ -41,7 +41,7 @@ public class LinkedinSecureLinkPage extends LinkedinBasePage {
     public LinkedinSetNewPasswordPage navigateToLinkFromEmail() {
         String resetPasswordLink =
                 StringUtils.substringBetween(receivedEmail,
-                        "To change your LinkedIn password, click <a href=\"",
+                        "To change your LinkedIn password, click <a href=\"", //escaping for " is \
                         "\" style").replace("amp;","");
 
         System.out.println(resetPasswordLink);
