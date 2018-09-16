@@ -6,30 +6,41 @@ import org.testng.annotations.Test;
 import page.LinkedInErrorPage;
 import page.LinkedInHomePage;
 import page.LinkedinLoginPage;
-
-import static java.lang.Thread.sleep;
-
+/**
+ * LinkedinLogin Test class.
+ */
 public class LinkedinLoginTest extends LinkedinBaseTest{
 
-    String email="altestqa@gmail.com";
-    String PW="21122112";
+    String email=userEmail;
+    String PW=userPW;
 
+    /**
+     * DataProvider with valid Email/Password
+     */
     @DataProvider
     public Object[][] validDataProvider() {
         return new Object[][]{
-                { "altestqa@gmail.com", "21122112"},
-                { "ALtestQA@gmail.com", "21122112" }
+                { email, PW},
+                { email.toUpperCase(), PW }
         };
     }
 
+    /**
+     * Verify successful user Login.
+     *
+     * Preconditions:
+     * - Open new browser.
+     * - Navigate to linkedin.com
+     *
+     * Scenario:
+     * - Verify that login page is loaded.
+     * - Enter userEmail.
+     * - Enter userPassword.
+     * - Click on 'Sign in' button.
+     * - Verify Home page is loaded.
+     */
     @Test(dataProvider = "validDataProvider")
     public void succeedfulLoginTest (String userEmail, String userPassword) {
-        //navigate to linkedin.com
-        //verify that login page is loaded
-        //enter userEmail
-        //enter userPW
-        //click on 'Sign in' button
-        //verify Home page is displayed.
 
        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
        LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPassword);
@@ -38,6 +49,9 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
        linkedInHomePage.clickSignOut();
     }
 
+    /**
+     * DataProvider with invalid Email/Password
+     */
     @DataProvider
     public Object[][] invalidDataProvider() {
         return new Object[][]{
@@ -47,6 +61,23 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
                 { "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa129@gmail.com", PW ,"The text you provided is too long (the maximum length is 128 characters, your text contains 129 characters).", "" }
         };
     }
+
+    /**
+     * Verify user Login with wrong email and/or password.
+     *
+     *  Preconditions:
+     *  Open new browser.
+     *  Navigate to linkedin.com
+     *
+     *  Scenario:
+     *  - Verify that login page is loaded.
+     *  - Enter userEmail.
+     *  - Enter userPassword.
+     * @param userEmail
+     * @param userPassword
+     * @param userEmailAlertMessage - expected message for Login field
+     * @param userPasswordAlertMessage - expected message for Password field
+     */
     @Test(dataProvider = "invalidDataProvider")
     public void negativeLoginErrorsTest (String userEmail, String userPassword, String userEmailAlertMessage, String userPasswordAlertMessage){
         //navigate to login site
@@ -64,66 +95,90 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
         Assert.assertEquals(linkedInErrorPage.getPWAlertText(), userPasswordAlertMessage, "User Password alert message text is wrong.");
 
     }
-
-    @Test
-    public void negativeEmptyLoginTest (){
-        //navigate to login site
-        //leave empty email and password/or one of them
-        //verify that signIn button disabled and logon impossible
+    /**
+     * DataProvider with empty Email/Password
+     */
+    @DataProvider
+    public Object[][] emptyDataProvider() {
+        return new Object[][]{
+                { "", "" },
+                { email, "" },
+                { "", PW }
+        };
+    }
+    /**
+     * Verify user Login with empty email and/or password.
+     *
+     *  Preconditions:
+     *  Open new browser.
+     *  Navigate to linkedin.com
+     *
+     * Scenario:
+     * - Verify that login page is loaded.
+     * - Enter empty userEmail/userPassword.
+     * - Verify that signIn button disabled and logon impossible
+     *  @param userEmail
+     *  @param userPW
+     */
+    @Test(dataProvider = "emptyDataProvider" )
+    public void negativeEmptyLoginTest (String userEmail, String userPW){
 
         LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
 
-        linkedinLoginPage  =  linkedinLoginPage.login("","");
+        linkedinLoginPage.clearEmail();
+        linkedinLoginPage  =  linkedinLoginPage.login(userEmail,userPW);
 
         Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login and PW empty");
-        linkedinLoginPage.login(email,"");
-        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when PW empty");
+//        linkedinLoginPage.login(email,"");
+//        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when PW empty");
+//
+//        linkedinLoginPage.clearEmail();
+//        linkedinLoginPage.login("",PW);
+//        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login empty");
+//
+}
 
-        linkedinLoginPage.clearEmail();
-        linkedinLoginPage.login("",PW);
-        Assert.assertTrue(linkedinLoginPage.isSignInDisabled(), "signIn button is not disabled on Error page, when Login empty");
-    }
-
+    /**
+     * DataProvider with valid Email/Password to check Login after Logout
+     */
     @DataProvider
     public Object[][] invalidBackDataProvider() {
         return new Object[][]{
-                { "ALtestQA@gmail.com", "21122112" }
+                { email, PW}
         };
     }
-
+    /**
+     * Verify successful user Login.
+     *
+     * Preconditions:
+     * - Open new browser.
+     * - Navigate to linkedin.com
+     *
+     * Scenario:
+     * - Verify that login page is loaded.
+     * - Enter userEmail.
+     * - Enter userPassword.
+     * - Click on 'Sign in' button.
+     * - Verify Home page is loaded.
+     * - Click on 'Logout'  button.
+     * - Click on Back arrow.
+     * - Verify that user is not logged, Login page is loaded.
+     *  @param userEmail
+     *  @param userPW
+     */
     @Test(dataProvider = "invalidBackDataProvider")
-    public void negativeLogoutBackLoginTest (String userEmail, String userPassword) {
-        //navigate to linkedin.com
-        //verify that login page is loaded
-        //enter userEmail
-        //enter userPW
-        //click on 'Sign in' button
-        //click on 'Logout' button
-        //click Back
-        //verify that user is not logged in
+    public void negativeLogoutBackLoginTest (String userEmail, String userPW) {
 
        LinkedinLoginPage linkedinLoginPage =  new LinkedinLoginPage(driver);
        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
-       LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPassword);
+       LinkedInHomePage linkedInHomePage =  linkedinLoginPage.login(userEmail,userPW);
        Assert.assertTrue(linkedInHomePage.isPageLoaded(),"Home page is not loaded");
        linkedInHomePage.clickSignOut();
 
-       // driver.findElement(By.xpath(signOutButton_xpath)).click();
+       driver.navigate().back();
 
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        driver.navigate().back();
-
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
+       Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
     }
 
 }

@@ -1,6 +1,5 @@
 package page;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,17 +13,32 @@ public class LinkedinSuccessfulPasswordResetPage extends LinkedinBasePage {
     @FindBy(xpath = "//button[text()='Go to homepage']")
     private WebElement goHomeButton;
 
+    /**
+     * Costructor of LinkedinSuccessfulPasswordResetPage.
+     *
+     * Initiate variables with Page Factory, when they are called.
+     * @param driver - driver instance from tests.
+     */
     public LinkedinSuccessfulPasswordResetPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementVisible(goHomeButton, 10);
     }
 
+    /**
+     * isPageLoaded method - checks URL, title and go home button are found and as expected.
+     * @return true, when everything found.
+     */
     public boolean isPageLoaded() {
         return getCurrentUrl().contains(url)
                 && getCurrentTitle().contains(title)
                 && goHomeButton.isDisplayed();
     }
 
+    /**
+     * goHome method - clicks on goHome button.
+     * @return new LinkedInHomePage.
+     */
     public LinkedInHomePage goHome() {
         goHomeButton.click();
         return new LinkedInHomePage(driver);

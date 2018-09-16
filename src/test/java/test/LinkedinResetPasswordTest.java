@@ -3,27 +3,35 @@ package test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import page.*;
-
-import static java.lang.Thread.sleep;
-
+/**
+ * LinkedinReset Password Test class.
+ */
 public class LinkedinResetPasswordTest extends LinkedinBaseTest{
 
     String email="altestqa@gmail.com";
-    String newPassword = "Qqqq2222";
+    String newPassword = "Aqqq2222";
 
+    /**
+     * Verify user Login with empty email and/or password.
+     *
+     *  Preconditions:
+     *  Open new browser.
+     *  Navigate to linkedin.com
+     *
+     * Scenario:
+     * - Verify that login page is loaded.
+     * - Click Reset Password.
+     * - Verify that Forgot PW page is loaded.
+     * - Fill in Email/PW to get link for new password.
+     * - Verify that Submit page is loaded.
+     * - Connect to email  to copy link sent.
+     * - Navigate to link from email.
+     * - Verify that new password page is loaded.
+     * - Fill in new password twice.
+     * - Verify that home page is loaded.
+     */
     @Test
     public void resetPasswordTest () {
-        //navigate to linkedin.com
-        //verify that login page is loaded
-        //click reset  PW
-        //verify that Forgot PW page is loaded
-        //fill in fields to get link
-        //verify that secure link page is loaded
-        //sleep
-        //click link
-        //verify that new password page is loaded
-        //verify that home page is loaded
-
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),"Login page is not loaded");
         LinkedinForgotPasswordPage linkedinForgotPasswordPage = linkedinLoginPage.forgotPasswordClick();
 
@@ -31,15 +39,6 @@ public class LinkedinResetPasswordTest extends LinkedinBaseTest{
 
         LinkedinSecureLinkPage linkedinSecureLinkPage =linkedinForgotPasswordPage.findAccount();
 
-        /////////////////////////////////////////////manual link click//////////////////////////
-
-        try {
-            sleep(12000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        //navigate to link from email. from 1st onject link to gmail, from other get it
         Assert.assertTrue(linkedinSecureLinkPage.isPageLoaded(),"Secure link page is not loaded");
 
         LinkedinSetNewPasswordPage linkedinSetNewPasswordPage =

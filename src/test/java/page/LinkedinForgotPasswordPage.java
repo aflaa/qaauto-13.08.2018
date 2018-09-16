@@ -4,8 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import util.GMailService;
 
+
+/**
+ * LinkedinForgotPasswordPage object Page.
+ */
 public class LinkedinForgotPasswordPage extends LinkedinBasePage {
 
     String url ="https://www.linkedin.com/uas/request-password-reset";
@@ -15,35 +18,45 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
     @FindBy(xpath = "//input[@class='login-email']")
     private WebElement userEmailField;
     @FindBy(xpath = "//button[@id='reset-password-submit-button']")
-    private WebElement findAccountButton;
+    private WebElement resetPasswordButton;
     @FindBy(xpath= "//input[@id='username']")
     private WebElement emailAccountField;
 
+    /**
+     * Costructor of LinkedinForgotPasswordPage.
+     *
+     * Initiate variables with Page Factory, when they are called.
+     * @param driver - driver instance from tests.
+     */
     public LinkedinForgotPasswordPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementVisible(emailAccountField, 10);
     }
 
+    /**
+     * isPageLoaded method - checks URL, title and Reset Password button are found and as expected.
+     * @return true, when everything found.
+     */
     public boolean isPageLoaded() {
         return getCurrentUrl().contains(url)
                 && getCurrentTitle().contains(title)
-                && findAccountButton.isDisplayed();
+                && resetPasswordButton.isDisplayed();
     }
 
+    /**
+     * findAccount method cliks to find Account to reset password.
+     *
+     * - Connect to email service.
+     * - Insert user email and click.
+     * - Wait for a new email with reset href.
+     * @return LinkedinSecureLinkPage
+     */
     public LinkedinSecureLinkPage findAccount() {
-      //  GMailService gMailService = new GMailService();
         gMailService.connect();
 
         emailAccountField.sendKeys(userEmail);
-        findAccountButton.click();
-        //ToDo:
-    //getting URL from gmail >> move to other page:
-        //  take message
-        //  find href
-        //  encode href with &amp
-        //decode href
-        //insert href
-        // go to insert new password
+        resetPasswordButton.click();
 
         String messageSubject = "here's the link to reset your password";
         String messageTo = "altestqa@gmail.com";

@@ -4,7 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import static java.lang.Thread.sleep;
 
 
 /**
@@ -31,9 +30,10 @@ public class LinkedinLoginPage extends LinkedinBasePage {
 
 
     /**
-     * Constructor for LinkedinLoginPage
+     * Costructor of LinkedinLoginPage.
      *
-     * @param driver -driver instance from tests.
+     * Initiate variables with Page Factory, when they are called.
+     * @param driver - driver instance from tests.
      */
     public LinkedinLoginPage(WebDriver driver){
         this.driver = driver;
@@ -55,11 +55,6 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPW);
         signInButton.click();
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if (getCurrentUrl().contains("/feed")) {
             return (T) new LinkedInHomePage(driver);
         }
@@ -71,21 +66,39 @@ public class LinkedinLoginPage extends LinkedinBasePage {
         }
     }
 
+    /**
+     * isPageLoaded method. Checks URL, title and signIn Button are found as expected.
+     * @return true, when everything found.
+     */
     public boolean isPageLoaded() {
+        waitUntilElementVisible(signInButton, 30);
         return getCurrentUrl().equals(url)
                 && getCurrentTitle().equals(title)
                 && signInButton.isDisplayed();
     }
 
+    /**
+     * isSignInDisabled method checks if signInButton is disable.
+     *
+     * @return true when signInButton is disable.
+     */
     public boolean isSignInDisabled() {
         return isPageLoaded()
                 && (!signInButton.isEnabled()) ;
     }
 
+    /**
+     * clearEmail method clears email field.
+     */
     public void clearEmail() {
         userEmailField.clear();
     }
 
+    /**
+     * forgotPasswordClick method clicks on forgotPassword button.
+     *
+     * @return LinkedinForgotPasswordPage.
+     */
     public LinkedinForgotPasswordPage forgotPasswordClick() {
         forgotPasswordButton.click();
         return new LinkedinForgotPasswordPage(driver);

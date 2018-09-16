@@ -6,8 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static java.lang.Thread.sleep;
-
+/**
+ * LinkedinSecureLink Object Page
+ */
 public class LinkedinSecureLinkPage extends LinkedinBasePage {
 
     String url ="/request-password-reset-submit";
@@ -17,27 +18,38 @@ public class LinkedinSecureLinkPage extends LinkedinBasePage {
     @FindBy(xpath = "//a[@class='different__email different__email--desktop']")
     private WebElement diffEmailButton;
 
-//    @FindBy(xpath = "//button[@id='reset-password-submit-button']")
-//    private WebElement findAccountButton;
-//    @FindBy(xpath= "//input[@id='username']")
-//    private WebElement emailAccountField;
-
+    /**
+     * Costructor of LinkedinSecureLinkPage.
+     *
+     * Initiate variables with Page Factory, when they are called.
+     * @param driver - driver instance from tests.
+     */
     public LinkedinSecureLinkPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        waitUntilElementVisible(diffEmailButton, 10);
     }
-
+    /**
+     * isPageLoaded method - checks URL, title and Different email button are found and as expected.
+     * @return true, when everything found.
+     */
     public boolean isPageLoaded() {
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitUntilElementVisible(diffEmailButton, 30);
         return getCurrentUrl().contains(url)
                 && getCurrentTitle().contains(title)
-                //&& diffEmailButton.isDisplayed()
+                && diffEmailButton.isDisplayed()
                 ;
     }
+
+    /**
+     * navigateToLinkFromEmail method take link from email.
+     *
+     * Scenario:
+     * - in email finds a link between 2 strings.
+     * - Print found link.
+     * - Get link to driver.
+     * @return LinkedinSetNewPasswordPage
+     */
     public LinkedinSetNewPasswordPage navigateToLinkFromEmail() {
         String resetPasswordLink =
                 StringUtils.substringBetween(receivedEmail,
