@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * LinkedInError object Page.
+ * LinkedInError Page Object.
  *
  * Page loaded after some errors were submit in Login or password fields.
  */
@@ -30,15 +30,15 @@ public class LinkedInErrorPage extends LinkedinBasePage {
     private WebElement userPasswordAlertMessage;
 
     /**
-     * Costructor of LinkedInErrorPage.
+     * Constructor of LinkedInErrorPage.
      *
-     * Initiate variables with Page Factory,when theyare called.
+     * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
      */
     public LinkedInErrorPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
-        waitUntilElementVisible(userEmailField, 10);
+        assertElementIsVisible(userEmailField,5, "LinkedIn Error Page is not loaded." );
     }
 
     /**
@@ -46,9 +46,10 @@ public class LinkedInErrorPage extends LinkedinBasePage {
      * @return true, when everything found.
      */
     public boolean isPageLoaded() {
-        return getCurrentUrl().equals(url)
-                && getCurrentTitle().equals(title)
-                && signInButton.isDisplayed() ;
+        return getCurrentUrl().contains(url)
+                && getCurrentTitle().contains(title)
+               && userPasswordField.isDisplayed()
+                ;
     }
 
     /**
@@ -58,6 +59,7 @@ public class LinkedInErrorPage extends LinkedinBasePage {
     public String getAlertMessageText() {
         return alertMessage.getText();
     }
+
     /**
      * getUserEmailAlertText method - get alert message for user email field.
      * @return
@@ -65,6 +67,7 @@ public class LinkedInErrorPage extends LinkedinBasePage {
     public String getUserEmailAlertText() {
         return userEmailAlertMessage.getText();
     }
+
     /**
      * getAlertMessageText method - get alert message for password field.
      * @return

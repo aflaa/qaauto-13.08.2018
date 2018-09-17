@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * LinkedinSearch Object Page
+ * LinkedinSearch Page Object.
  */
 public class LinkedinSearchPage extends LinkedinBasePage {
 
@@ -24,7 +24,7 @@ public class LinkedinSearchPage extends LinkedinBasePage {
     private List<WebElement> searchResults;
 
     /**
-     * Costructor of LinkedinSearchPage.
+     * Constructor of LinkedinSearchPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -32,7 +32,7 @@ public class LinkedinSearchPage extends LinkedinBasePage {
     public LinkedinSearchPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisible(searchResultsTotal, 10);
+        assertElementIsVisible(searchResultsTotal,5, "LinkedIn Search Page is not loaded." );
     }
     /**
      * isPageLoaded method - checks URL, title and search results count are found as expected.

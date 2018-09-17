@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * LinkedInHome Object Page.
+ * LinkedInHome Page Object.
  */
 public class LinkedInHomePage extends LinkedinBasePage{
 
@@ -26,7 +26,7 @@ public class LinkedInHomePage extends LinkedinBasePage{
     private WebElement launchpadCards;
 
     /**
-     * Costructor of LinkedinForgotPasswordPage.
+     * Constructor of LinkedinForgotPasswordPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -34,7 +34,7 @@ public class LinkedInHomePage extends LinkedinBasePage{
     public LinkedInHomePage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver,this);
-        waitUntilElementVisible(profileNavItem, 10);
+        assertElementIsVisible(profileNavItem,5 , "LinkedIn Home Page is not loaded." );
     }
     /**
      * isPageLoaded method. Checks URL, title and Profile navigation menu are found as expected.

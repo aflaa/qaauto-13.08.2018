@@ -6,7 +6,7 @@
             <class name="test.LinkedinLoginTest">
             <methods>
                 <exclude name="succeedfulLoginTest"/>
-                <exclude name="negativeLoginErrorsTest"/>
+                <include name="negativeLoginErrorsTest"/>
                 <exclude name="negativeEmptyLoginTest"/>
                 <exclude name="negativeLogoutBackLoginTest"/>
             </methods>
@@ -20,7 +20,7 @@
 
             <class name="test.LinkedinResetPasswordTest">
                 <methods>
-                    <include name="resetPasswordTest"/>
+                    <exclude name="resetPasswordTest"/>
                 </methods>
             </class>
         </classes>

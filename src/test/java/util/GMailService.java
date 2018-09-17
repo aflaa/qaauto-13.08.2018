@@ -11,6 +11,9 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * GMailService class iconnct to gmail service.
+ */
 public class GMailService {
     String host = "imap.gmail.com";
     String user;

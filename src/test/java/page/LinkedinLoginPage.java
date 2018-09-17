@@ -30,7 +30,7 @@ public class LinkedinLoginPage extends LinkedinBasePage {
 
 
     /**
-     * Costructor of LinkedinLoginPage.
+     * Constructor of LinkedinLoginPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -38,6 +38,7 @@ public class LinkedinLoginPage extends LinkedinBasePage {
     public LinkedinLoginPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
+        assertElementIsVisible(signInButton,5, "LinkedIn Login Page is not loaded." );
     }
 
     /**
@@ -48,17 +49,18 @@ public class LinkedinLoginPage extends LinkedinBasePage {
      * @param <T> - generic type to to return different PageObjects.
      * @return one of corresponding PageObjects LinkedInHomePage/LinkedInErrorPage/LinkedinLoginPage.
      */
-    public <T> T login(String userEmail, String userPW) {//problem will occur, as can be different pages
+    public <T> T login(String userEmail, String userPW) {//a problem will occur, as pages can be different
         if (alertMessage.getText().contains("uses cookies")) {
             cookiesAlertClose.click();
         }
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPW);
         signInButton.click();
-        if (getCurrentUrl().contains("/feed")) {
+
+        if (isUrlContains("/feed", 3)) {
             return (T) new LinkedInHomePage(driver);
         }
-        if (getCurrentUrl().contains("/login-submit")) {
+        if (isUrlContains("/login-submit", 3)) {
             return (T) new LinkedInErrorPage(driver);
         }
         else {

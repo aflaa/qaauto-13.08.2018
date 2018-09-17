@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 
 /**
- * LinkedinForgotPasswordPage object Page.
+ * LinkedinForgotPasswordPage Page Object.
  */
 public class LinkedinForgotPasswordPage extends LinkedinBasePage {
 
@@ -23,7 +23,7 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
     private WebElement emailAccountField;
 
     /**
-     * Costructor of LinkedinForgotPasswordPage.
+     * Constructor of LinkedinForgotPasswordPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -31,7 +31,7 @@ public class LinkedinForgotPasswordPage extends LinkedinBasePage {
     public LinkedinForgotPasswordPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisible(emailAccountField, 10);
+        assertElementIsVisible(emailAccountField,5, "LinkedIn Forgot Page is not loaded." );
     }
 
     /**

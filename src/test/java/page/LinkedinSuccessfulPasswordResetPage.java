@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+/**
+ * LinkedinSuccessfulPasswordReset Page Object.
+ */
 public class LinkedinSuccessfulPasswordResetPage extends LinkedinBasePage {
 
     String url ="https://www.linkedin.com/checkpoint/rp/password-reset-submit";
@@ -14,7 +17,7 @@ public class LinkedinSuccessfulPasswordResetPage extends LinkedinBasePage {
     private WebElement goHomeButton;
 
     /**
-     * Costructor of LinkedinSuccessfulPasswordResetPage.
+     * Constructor of LinkedinSuccessfulPasswordResetPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -22,7 +25,7 @@ public class LinkedinSuccessfulPasswordResetPage extends LinkedinBasePage {
     public LinkedinSuccessfulPasswordResetPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisible(goHomeButton, 10);
+        assertElementIsVisible(goHomeButton,5, "LinkedIn Successful Reset Password Page is not loaded." );
     }
 
     /**

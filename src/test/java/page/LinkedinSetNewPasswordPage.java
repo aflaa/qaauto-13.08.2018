@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * LinkedinSetNewPassword Object Page
+ * LinkedinSetNewPassword Page Object.
  */
 public class LinkedinSetNewPasswordPage extends LinkedinBasePage {
 
@@ -21,7 +21,7 @@ public class LinkedinSetNewPasswordPage extends LinkedinBasePage {
     private WebElement submitNewPwButton;
 
     /**
-     * Costructor of LinkedinSetNewPasswordPage.
+     * Constructor of LinkedinSetNewPasswordPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -29,7 +29,7 @@ public class LinkedinSetNewPasswordPage extends LinkedinBasePage {
     public LinkedinSetNewPasswordPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisible(newPasswordField, 10);
+        assertElementIsVisible(newPasswordField,5, "LinkedIn New Password Page is not loaded." );
     }
 
     /**

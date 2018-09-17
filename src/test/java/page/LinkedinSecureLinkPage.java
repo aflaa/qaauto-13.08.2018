@@ -7,19 +7,18 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * LinkedinSecureLink Object Page
+ * LinkedinSecureLink Page Object.
  */
 public class LinkedinSecureLinkPage extends LinkedinBasePage {
 
     String url ="/request-password-reset-submit";
     String title = "Please check your mail for reset password link" ;
-   // String userEmail = "altestqa@gmail.com";
 
     @FindBy(xpath = "//a[@class='different__email different__email--desktop']")
     private WebElement diffEmailButton;
 
     /**
-     * Costructor of LinkedinSecureLinkPage.
+     * Constructor of LinkedinSecureLinkPage.
      *
      * Initiate variables with Page Factory, when they are called.
      * @param driver - driver instance from tests.
@@ -27,7 +26,7 @@ public class LinkedinSecureLinkPage extends LinkedinBasePage {
     public LinkedinSecureLinkPage(WebDriver driver){
         this.driver = driver;
         PageFactory.initElements(driver, this);
-        waitUntilElementVisible(diffEmailButton, 10);
+        assertElementIsVisible(diffEmailButton,5, "LinkedIn Secure Link Page is not loaded." );
     }
     /**
      * isPageLoaded method - checks URL, title and Different email button are found and as expected.
