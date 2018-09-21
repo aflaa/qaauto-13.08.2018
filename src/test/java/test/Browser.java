@@ -7,34 +7,41 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+/**
+ * Browser class to initiate browser.
+ */
 public class Browser {
-    char browserName = 'f';
+    //protected String browserName = "opera";
     WebDriver driver;
-
-
-    public void setBrowser() {
-        switch (browserName) {
-            case 'f':
+    /**
+     * setBrowser method check which browser to user for tests.
+     */
+    public void setBrowser(String browserName) throws Exception {
+        switch (browserName.toLowerCase()) {
+            case "firefox":
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
 
-            case 'c':
+            case "chrome":
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.setExperimentalOption("useAutomationExtension", false);
                 chromeOptions.addArguments("start-maximized");
                 driver = new ChromeDriver(chromeOptions);
                 break;
-            case 'i':
+
+            case "ie":
                 WebDriverManager.iedriver().setup();
                 driver = new InternetExplorerDriver();
                 break;
+
             default:
-                System.out.println(browserName +" name of browser is not found");
+              throw new Exception ("Browser " + browserName+ " is not supported.");
 
         }
 
     }
 
     ;
+
 }

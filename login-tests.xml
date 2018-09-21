@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Login Test Suits" >
+    <parameter name="browserName" value="chrome"/>
+    <test name="Positive" >
+        <classes>
+            <class name="test.LinkedinLoginTest">
+                <methods>
+                    <include name="succeedfulLoginTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Negative" >
+        <classes>
+            <class name="test.LinkedinLoginTest">
+            <methods>
+                <include name="negativeLoginErrorsTest"/>
+                <exclude name="negativeLogoutBackLoginTest"/>
+            </methods>
+            </class>
+         </classes>
+    </test>
+    <test name="Empty values" >
+        <classes>
+            <class name="test.LinkedinLoginTest">
+                <methods>
+                    <exclude name="negativeEmptyLoginTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

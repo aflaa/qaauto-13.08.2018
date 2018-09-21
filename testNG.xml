@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="TestNG" verbose="1" >
-    <test name="LinkedIn" >
-        <classes>
-            <class name="test.LinkedinLoginTest">
+<suite name="TestNG" verbose="1" parallel="tests" thread-count="2">
+    <test name="Chrome tests" >
+    <parameter name="browserName" value="chrome"/>
+    <classes>
+        <class name="test.LinkedinLoginTest">
             <methods>
                 <exclude name="succeedfulLoginTest"/>
                 <include name="negativeLoginErrorsTest"/>
                 <exclude name="negativeEmptyLoginTest"/>
                 <exclude name="negativeLogoutBackLoginTest"/>
             </methods>
+        </class>
+
+        <class name="test.LinkedinSearchTest">
+            <methods>
+                <exclude name="searchHomePageTest"/>
+            </methods>
+        </class>
+
+        <class name="test.LinkedinResetPasswordTest">
+            <methods>
+                <exclude name="resetPasswordTest"/>
+            </methods>
+        </class>
+    </classes>
+    </test>
+    <test name="FireFox tests" >
+        <parameter name="browserName" value="firefox"/>
+        <classes>
+            <class name="test.LinkedinLoginTest">
+                <methods>
+                    <exclude name="succeedfulLoginTest"/>
+                    <include name="negativeLoginErrorsTest"/>
+                    <exclude name="negativeEmptyLoginTest"/>
+                    <exclude name="negativeLogoutBackLoginTest"/>
+                </methods>
             </class>
 
             <class name="test.LinkedinSearchTest">

@@ -2,6 +2,8 @@ package test;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 import page.LinkedinLoginPage;
 
 /**
@@ -11,6 +13,7 @@ public class LinkedinBaseTest extends Browser {
     String testSite="https://www.linkedin.com/";
     protected String userEmail="altestqa@gmail.com";
     protected String userPW="Aqqq2222";
+    //String browserName = "opera";
 
     LinkedinLoginPage linkedinLoginPage;
 
@@ -23,9 +26,10 @@ public class LinkedinBaseTest extends Browser {
      * - Navigate to test site link.
      * - Create LinkedinLoginPage.
      */
+    @Parameters("browserName")
     @BeforeMethod //BeforeTest doesn't work as expected
-    public void beforeMethod() {
-        setBrowser();
+    public void beforeMethod(@Optional("Chrome") String browserName) throws Exception {
+        setBrowser(browserName);
         driver.get(testSite);
         linkedinLoginPage =  new LinkedinLoginPage(driver);
     }
