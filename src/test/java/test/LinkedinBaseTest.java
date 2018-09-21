@@ -10,7 +10,7 @@ import page.LinkedinLoginPage;
  * LinkedinBase test class with common for other tests methods.
  */
 public class LinkedinBaseTest extends Browser {
-    String testSite="https://www.linkedin.com/";
+    //String testSite="https://www.linkedin.com/";
     protected String userEmail="altestqa@gmail.com";
     protected String userPW="Aqqq2222";
     //String browserName = "opera";
@@ -26,9 +26,9 @@ public class LinkedinBaseTest extends Browser {
      * - Navigate to test site link.
      * - Create LinkedinLoginPage.
      */
-    @Parameters("browserName")
+    @Parameters({"browserName","testSite"})
     @BeforeMethod //BeforeTest doesn't work as expected
-    public void beforeMethod(@Optional("Chrome") String browserName) throws Exception {
+    public void beforeMethod(@Optional("Chrome") String browserName,@Optional("https://www.linkedin.com/") String testSite) throws Exception {
         setBrowser(browserName);
         driver.get(testSite);
         linkedinLoginPage =  new LinkedinLoginPage(driver);

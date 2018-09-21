@@ -3,6 +3,7 @@
 <suite name="TestNG" verbose="1" parallel="tests" thread-count="2">
     <test name="Chrome tests" >
     <parameter name="browserName" value="chrome"/>
+        <parameter name="testSite" value="https://www.linkedin.com/"/>
     <classes>
         <class name="test.LinkedinLoginTest">
             <methods>
