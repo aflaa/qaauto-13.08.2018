@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class LinkedinSearchPage extends LinkedinBasePage {
 
-    String url = "https://www.linkedin.com/search/results/";
+    String url = ".linkedin.com/search/results/";
     String title = "Search | LinkedIn";
 
     @FindBy(xpath = "//h3[contains(@class,'search-results__total')]")

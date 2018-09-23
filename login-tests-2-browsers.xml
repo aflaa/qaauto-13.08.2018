@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Login test 2 browsers" parallel="tests" thread-count="3">
+    <test name="Chrome tests in UA host" >
+        <parameter name="browserName" value="chrome"/>
+        <parameter name="envURL" value="https://ua.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest">
+            </class>
+        </classes>
+    </test>
+    <test name="FireFox tests in UA host" >
+        <parameter name="browserName" value="firefox"/>
+        <parameter name="envURL" value="https://ua.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest"></class>
+        </classes>
+    </test>
+    <test name="Chrome tests in RU host" >
+        <parameter name="browserName" value="chrome"/>
+        <parameter name="envURL" value="https://ru.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest"></class>
+        </classes>
+    </test>
+    <test name="FireFox tests in RU host" >
+        <parameter name="browserName" value="firefox"/>
+        <parameter name="envURL" value="https://ru.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest"></class>
+        </classes>
+    </test>
+    <test name="Chrome tests in DE host" >
+        <parameter name="browserName" value="chrome"/>
+        <parameter name="envURL" value="https://de.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest"></class>
+        </classes>
+    </test>
+    <test name="FireFox tests in DE host" >
+        <parameter name="browserName" value="firefox"/>
+        <parameter name="envURL" value="https://de.linkedin.com/"/>
+        <classes>
+            <class name="test.LinkedinLoginTest"></class>
+        </classes>
+    </test>
+</suite>

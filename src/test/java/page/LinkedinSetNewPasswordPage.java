@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LinkedinSetNewPasswordPage extends LinkedinBasePage {
 
-    String url ="https://www.linkedin.com/checkpoint/rp/password-reset";
+    String url =".linkedin.com/checkpoint/rp/password-reset";
     String title = "Reset Your Password | LinkedIn" ;
 
     @FindBy(xpath = "//input[@id='newPassword']")

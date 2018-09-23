@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LinkedInHomePage extends LinkedinBasePage{
 
-    String url = "https://www.linkedin.com/feed/";
+    String url = ".linkedin.com/feed/";
     String title = "LinkedIn" ;
 
     @FindBy(xpath = "//li[@id='profile-nav-item']")
@@ -41,7 +41,7 @@ public class LinkedInHomePage extends LinkedinBasePage{
      * @return true, when everything found.
      */
     public boolean isPageLoaded() {
-        return getCurrentUrl().equals(url)
+        return getCurrentUrl().contains(url)
                 && getCurrentTitle().contains(title) //can be removed
                 && profileNavItem.isDisplayed() ;
     }

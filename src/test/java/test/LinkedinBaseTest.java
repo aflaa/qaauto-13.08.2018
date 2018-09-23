@@ -26,11 +26,11 @@ public class LinkedinBaseTest extends Browser {
      * - Navigate to test site link.
      * - Create LinkedinLoginPage.
      */
-    @Parameters({"browserName","testSite"})
+    @Parameters({"browserName","envURL"})
     @BeforeMethod //BeforeTest doesn't work as expected
-    public void beforeMethod(@Optional("Chrome") String browserName,@Optional("https://www.linkedin.com/") String testSite) throws Exception {
+    public void beforeMethod(@Optional("Chrome") String browserName,@Optional("https://www.linkedin.com/") String envURL) throws Exception {
         setBrowser(browserName);
-        driver.get(testSite);
+        driver.get(envURL);
         linkedinLoginPage =  new LinkedinLoginPage(driver);
     }
 

@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LinkedinSuccessfulPasswordResetPage extends LinkedinBasePage {
 
-    String url ="https://www.linkedin.com/checkpoint/rp/password-reset-submit";
+    String url =".linkedin.com/checkpoint/rp/password-reset-submit";
     String title = "You've successfully reset your password. | LinkedIn" ;
 
     @FindBy(xpath = "//button[text()='Go to homepage']")

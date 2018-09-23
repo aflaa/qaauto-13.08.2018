@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LinkedInErrorPage extends LinkedinBasePage {
 
-    String url = "https://www.linkedin.com/uas/login-submit";
+    String url = ".linkedin.com/uas/login-submit";
     String title = "Sign In to LinkedIn";
 
     @FindBy(xpath = "//input[@id='session_key-login']")

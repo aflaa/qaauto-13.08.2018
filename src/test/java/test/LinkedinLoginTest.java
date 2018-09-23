@@ -2,6 +2,7 @@ package test;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import page.LinkedInErrorPage;
 import page.LinkedInHomePage;
@@ -40,6 +41,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
      * - Click on 'Sign in' button.
      * - Verify Home page is loaded.
      */
+    @Ignore
     @Test(dataProvider = "validDataProvider")
     public void succeedfulLoginTest (String userEmail, String userPassword) {
 
@@ -118,6 +120,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
      *  @param userEmail
      *  @param userPW
      */
+    @Ignore
     @Test(dataProvider = "emptyDataProvider" )
     public void negativeEmptyLoginTest (String userEmail, String userPW){
 
@@ -158,6 +161,7 @@ public class LinkedinLoginTest extends LinkedinBaseTest{
      *  @param userEmail
      *  @param userPW
      */
+    @Ignore
     @Test(dataProvider = "invalidBackDataProvider")
     public void negativeLogoutBackLoginTest (String userEmail, String userPW) {
 

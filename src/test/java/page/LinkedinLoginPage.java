@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class LinkedinLoginPage extends LinkedinBasePage {
 
-    String url ="https://www.linkedin.com/";
+    String url =".linkedin.com/";
     String title = "LinkedIn: Log In or Sign Up" ;
 
     @FindBy(xpath = "//input[@class='login-email']")
@@ -74,8 +74,8 @@ public class LinkedinLoginPage extends LinkedinBasePage {
      */
     public boolean isPageLoaded() {
         waitUntilElementVisible(signInButton, 30);
-        return getCurrentUrl().equals(url)
-                && getCurrentTitle().equals(title)
+        return getCurrentUrl().contains(url)
+                && getCurrentTitle().contains(title)
                 && signInButton.isDisplayed();
     }
 
