@@ -27,29 +27,4 @@
         </class>
     </classes>
     </test>
-    <test name="FireFox tests" >
-        <parameter name="browserName" value="firefox"/>
-        <classes>
-            <class name="test.LinkedinLoginTest">
-                <methods>
-                    <exclude name="succeedfulLoginTest"/>
-                    <include name="negativeLoginErrorsTest"/>
-                    <exclude name="negativeEmptyLoginTest"/>
-                    <exclude name="negativeLogoutBackLoginTest"/>
-                </methods>
-            </class>
-
-            <class name="test.LinkedinSearchTest">
-                <methods>
-                    <exclude name="searchHomePageTest"/>
-                </methods>
-            </class>
-
-            <class name="test.LinkedinResetPasswordTest">
-                <methods>
-                    <exclude name="resetPasswordTest"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
 </suite>
